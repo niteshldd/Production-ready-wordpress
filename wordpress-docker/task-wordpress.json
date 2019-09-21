@@ -1,0 +1,94 @@
+{
+    "containerDefinitions": [
+      {
+        "name": "wordpress",
+        "image": "wordpress:latest",
+        "cpu": 100,
+        "memory": 300,
+        "essential": true,
+        "environment": [
+          { "name":"WORDPRESS_DB_HOST",
+            "value": "aws-wordpress-rukjaana.cqq8ehwruvlm.ap-south-1.rds.amazonaws.com:3306"
+           },
+           {
+             "name": "WORDPRESS_DB_USER",
+             "value": "dbmaster"
+           },
+           {
+             "name": "WORDPRESS_DB_PASSWORD",
+             "value": "dbpassword"
+           },
+           {
+             "name": "WORDPRESS_DB_NAME",
+             "value": "wordpress"
+           }
+          ],
+        "mountPoints": [
+          {
+            "sourceVolume": "wordpress",
+            "containerPath": "/var/www/html"
+          }
+        ]
+      },
+      {
+        "name": "nginx",
+        "image": "409888909294.dkr.ecr.ap-south-1.amazonaws.com/nginx:1.0",
+        "cpu": 100,
+        "memory": 100,
+        "essential": true,
+        "links": [
+          "wordpress"
+      ],
+        "mountPoints": [
+          {
+            "sourceVolume": "nginx",
+            "containerPath": "/var/log/nginx"
+          }
+        ],
+        "portMappings": [
+          {
+              "containerPort": 80,
+              "hostPort": 0,
+              "protocol": "tcp"
+          },
+          {
+            "containerPort": 443,
+            "hostPort": 0,
+            "protocol": "tcp"
+        }
+      ]
+        
+      }
+    ],
+    "volumes": [
+      {
+          "name": "wordpress",
+          "dockerVolumeConfiguration" : {
+              "scope": "shared",
+              "autoprovision": true,
+              "driver": "local",
+              "labels": {
+                  "wordpress": "wordpress_data"
+              }
+          }
+      },
+      {
+        "name": "nginx",
+        "dockerVolumeConfiguration" : {
+            "scope": "shared",
+            "autoprovision": true,
+            "driver": "local",
+            "labels": {
+                "nginx": "nginx-data"
+            }
+        }
+    }
+  ],
+    "placementConstraints" : [],
+    "family": "taskWordDockerPress_Prod",
+    "requiresCompatibilities": [
+      "EC2"
+    ],
+    "networkMode": "bridge"
+    
+  }

@@ -1,0 +1,19 @@
+ 135  sudo curl -o /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+  136  curl
+  137  sudo apt install curl
+  138  sudo curl -o /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+  139  echo "$(curl -s https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest.md5) /usr/local/bin/ecs-cli" | md5sum -c -
+  140  gpg --keyserver hkp://keys.gnupg.net --recv BCE9D9A42D51784F
+  141  curl -o ecs-cli.asc https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest.asc
+  142  gpg --verify ecs-cli.asc /usr/local/bin/ecs-cli
+  143  sudo chmod +x /usr/local/bin/ecs-cli
+  144  ecs-cli --version
+  145  history
+#####################AWS CONFIGURE#####
+
+ubu@ubu:~/Documents/Wordpress-live/wordpress-docker$ aws configure
+AWS Access Key ID [None]:  AKIAV632IM7XL4P7VTFW                
+AWS Secret Access Key [None]: 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
+Default region name [None]: ap-south-1
+Default output format [None]: 
+ubu@ubu:~/Documents/Wordpress-li
